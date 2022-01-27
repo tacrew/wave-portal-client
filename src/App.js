@@ -106,7 +106,7 @@ const App = () => {
         </div>
 
         <button className="waveButton" onClick={wave}>
-          {isLoading ? <div class="dot-pulse"></div>: <span>Wave at Me</span>}
+          {isLoading ? <div class='loading-wrapper'><div class="dot-pulse"></div></div>: <span>Wave at Me</span>}
           
         </button>
 

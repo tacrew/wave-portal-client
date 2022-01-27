@@ -1,11 +1,10 @@
-import { ethers, providers } from "ethers";
-import React, {useState, useEffect} from "react";
 import { ethers } from "ethers";
+import React, {useState, useEffect} from "react";
 import './App.css';
 import ABI_JSON from "./utils/WavePortal.json";
 
 const contractAddress = '0x1BEb1ceB112C36DC72b76cd8dBF4722dAeD9F87D'
-const cpmtractABI = ABI_JSON.abi
+const contractABI = ABI_JSON.abi
 
 const App = () => {
   const [currentAccount, setCurrentAccount] = useState('')

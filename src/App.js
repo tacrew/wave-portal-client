@@ -8,6 +8,8 @@ const contractABI = ABI_JSON.abi
 
 const App = () => {
   const [currentAccount, setCurrentAccount] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
+  const [waveCount, setWaveCount] = useState(undefined)
 
   const checkIfWalletIsConnected = async () => {
     try {
@@ -55,6 +57,7 @@ const App = () => {
   }
 
   const wave = async () => {
+    setIsLoading(true)
     try {
       const {ethereum} = window
 
@@ -77,9 +80,12 @@ const App = () => {
 
       count = await wavePortalContract.getTotalWaves()
       console.log(`Retrieved total wave count...${count.toNumber()}`)
+      setWaveCount(count.toNumber())
     } catch(error) {
       console.log(error)
     }
+    setIsLoading(false)
+
   }
 
 
@@ -100,12 +106,15 @@ const App = () => {
         </div>
 
         <button className="waveButton" onClick={wave}>
-          Wave at Me
+          {isLoading ? <div class="loader">Loading...</div>: <span>Wave at Me</span>}
+          
         </button>
 
         {!currentAccount && (
           <button className="waveButton" onClick={connectWallet}>Connect Wallet</button>
         )}
+
+        {waveCount !== undefined && <div>your wave counts are {waveCount}</div>}
       </div>
     </div>
   );

@@ -127,7 +127,8 @@ const App = () => {
 
   useEffect(() => {
     checkIfWalletIsConnected();
-  }, [checkIfWalletIsConnected]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="mainContainer">

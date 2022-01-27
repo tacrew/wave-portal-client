@@ -118,6 +118,7 @@ const App = () => {
 
       count = await wavePortalContract.getTotalWaves();
       console.log(`Retrieved total wave count...${count.toNumber()}`);
+      await getAllWaves();
       setWaveCount(count.toNumber());
       setMessage("");
     } catch (error) {

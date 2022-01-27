@@ -105,10 +105,10 @@ const App = () => {
           I am farza and I worked on self-driving cars so that's pretty cool right? Connect your Ethereum wallet and wave at me!
         </div>
 
-        <button className="waveButton" onClick={wave}>
-          {isLoading ? <div class='loading-wrapper'><div class="dot-pulse"></div></div>: <span>Wave at Me</span>}
-          
-        </button>
+        {isLoading 
+          ? <div class='loading-wrapper'><div class="dot-pulse"></div></div>
+          : <button className="waveButton" onClick={wave}>Wave at Me </button>
+        }
 
         {!currentAccount && (
           <button className="waveButton" onClick={connectWallet}>Connect Wallet</button>

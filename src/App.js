@@ -195,7 +195,7 @@ const App = () => {
             <div class="dot-pulse"></div>
           </div>
         ) : (
-          <button className="waveButton" onClick={wave} disabled={!message}>
+          <button className="text-lg" onClick={wave} disabled={!message}>
             Wave at Me
           </button>
         )}

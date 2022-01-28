@@ -109,8 +109,9 @@ const App = () => {
         contractABI,
         signer
       );
-
+      console.log("before call");
       const waves = await wavePortalContract.getAllWaves();
+      console.log("after call");
 
       const wavesCleaned = waves.map((wave) => ({
         address: wave.waver,

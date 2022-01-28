@@ -1,9 +1,8 @@
 import { ethers } from "ethers";
 import React, { useState, useEffect } from "react";
-import "./App.css";
 import ABI_JSON from "./utils/WavePortal.json";
 
-const contractAddress = "0xb2074e681F6Cf20EFcdB759103a05eF2677B3330";
+const contractAddress = "0x0771594d6112126e65c13F41700cdBC3C091d20b";
 const contractABI = ABI_JSON.abi;
 
 const App = () => {
@@ -109,9 +108,8 @@ const App = () => {
         contractABI,
         signer
       );
-      console.log("before call");
+
       const waves = await wavePortalContract.getAllWaves();
-      console.log("after call");
 
       const wavesCleaned = waves.map((wave) => ({
         address: wave.waver,
@@ -155,7 +153,6 @@ const App = () => {
 
       count = await wavePortalContract.getTotalWaves();
       console.log(`Retrieved total wave count...${count.toNumber()}`);
-      await getAllWaves();
       setWaveCount(count.toNumber());
       setMessage("");
     } catch (error) {
@@ -170,58 +167,81 @@ const App = () => {
   }, []);
 
   return (
-    <div className="mainContainer">
-      <div className="dataContainer">
-        <div className="header">
-          <span role="img" aria-label="hi">
-            👋
-          </span>{" "}
-          Hey there!
-        </div>
-        <div className="bio">
-          I am farza and I worked on self-driving cars so that's pretty cool
-          right? Connect your Ethereum wallet and wave at me!
-        </div>
+    <div className="mx-auto pt-16 text-center">
+      <h1 className="text-[40px] font-bold">
+        <span role="img" aria-label="hi">
+          👋
+        </span>
+        ようこそ!
+      </h1>
 
-        <div>type your message and click below button </div>
-        <input
-          type="text"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-        />
+      <p className="mt-4 text-lg">
+        I am tacrew and I'm frontend dev at Tokyo, Japan. <br />
+        Connect your Ethereum wallet and wave at me!
+        <br />
+        Please connect your wallet to
+        <span className="font-bold text-red-500">Rinkeby test network</span>
+      </p>
 
+      <div className="mt-8 text-lg font-bold">
+        type your message and click below button
+      </div>
+
+      <input
+        type="text"
+        value={message}
+        placeholder="message"
+        onChange={(e) => setMessage(e.target.value)}
+        className="mt-4 py-2 px-4 w-[360px] border border-gray-400 rounded"
+      />
+
+      <div className="mt-4">
         {isLoading ? (
-          <div class="loading-wrapper">
-            <div class="dot-pulse"></div>
+          <div className="flex justify-center">
+            <div className="animate-spin h-8 w-8 border-4 border-blue-500 rounded-full border-t-transparent"></div>
           </div>
         ) : (
-          <button className="text-lg" onClick={wave} disabled={!message}>
+          <button
+            onClick={wave}
+            disabled={!message}
+            className="block mx-auto px-6 py-2 bg-blue-600 text-white rounded hover:opacity-90 cursor-pointer disabled:bg-gray-500 disabled:cursor-not-allowed"
+          >
             Wave at Me
           </button>
         )}
-        {!currentAccount && (
-          <button className="waveButton" onClick={connectWallet}>
-            Connect Wallet
-          </button>
-        )}
-        {waveCount !== undefined && <div>your wave counts are {waveCount}</div>}
+      </div>
+
+      {!currentAccount && (
+        <button
+          onClick={connectWallet}
+          className="block mt-4 mx-auto px-6 py-2 bg-amber-600 text-white rounded hover:opacity-90 cursor-pointer"
+        >
+          Connect Wallet
+        </button>
+      )}
+
+      {waveCount !== undefined && (
+        <div className="mt-6 text-lg">
+          you waved{" "}
+          <span className="text-xl font-bold text-red-600">{waveCount}</span>{" "}
+          times!
+        </div>
+      )}
+
+      <h2 className="mt-6 text-xl font-bold">Messages</h2>
+      <ul className="mt-2 w-[480px] mx-auto divide-y">
         {allWaves.map((wave, index) => {
           return (
-            <div
-              key={index}
-              style={{
-                backgroundColor: "OldLace",
-                marginTop: "16px",
-                padding: "8px",
-              }}
-            >
-              <div>Address: {wave.address}</div>
-              <div>Time: {wave.timestamp.toString()}</div>
-              <div>Message: {wave.message}</div>
-            </div>
+            <li key={index} className="py-2">
+              <div className="text-lg font-bold text-left">{wave.message}</div>
+              <div className="text-sm text-right text-gray-500">
+                by {wave.address}
+              </div>
+              <div className="text-sm text-right text-gray-500">{`${wave.timestamp.toLocaleDateString()} ${wave.timestamp.toLocaleTimeString()}`}</div>
+            </li>
           );
         })}
-      </div>
+      </ul>
     </div>
   );
 };
